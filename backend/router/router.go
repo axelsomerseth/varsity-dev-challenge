@@ -1,6 +1,8 @@
 package router
 
 import (
+	"path/filepath"
+
 	"github.com/gin-gonic/gin"
 	cors "github.com/rs/cors/wrapper/gin"
 
@@ -16,6 +18,11 @@ func Setup() *gin.Engine {
 	router.Use(cors.AllowAll())
 
 	router.SetTrustedProxies([]string{""})
+
+	router.StaticFile("/", filepath.Join("web", "index.html"))
+	router.StaticFS("/public/css", gin.Dir(filepath.Join("web", "public", "css"), false))
+	router.StaticFS("/public/js", gin.Dir(filepath.Join("web", "public", "js"), false))
+	router.StaticFile("/auth_config.json", filepath.Join("web", "auth_config.json"))
 
 	// Health check
 	router.GET("/health", controllers.Status)
