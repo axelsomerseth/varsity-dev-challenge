@@ -2,7 +2,7 @@ package models
 
 import "net/url"
 
-type Users struct {
+type User struct {
 	Model
 	Username string `validate:"required,max=20"`
 	// Password string `validate:"required,max=255"`

@@ -41,7 +41,7 @@ const updateUI = async() => {
     const isAuthenticated = await auth0.isAuthenticated();
 
     if (isAuthenticated) {
-        document.getElementById("gated-content").classList.remove("hidden");
+        document.getElementById("profile").classList.remove("hidden");
 
         document.getElementById(
             "ipt-access-token"
@@ -51,8 +51,9 @@ const updateUI = async() => {
             await auth0.getUser()
         );
         document.getElementById("btn-login").innerText = "Log out";
+        renderProfile(await auth0.getUser())
     } else {
-        document.getElementById("gated-content").classList.add("hidden");
+        document.getElementById("profile").classList.add("hidden");
         document.getElementById("btn-login").innerText = "Log in";
     }
 };
@@ -79,3 +80,13 @@ const logout = () => {
         returnTo: window.location.origin
     });
 };
+
+const renderProfile = (profile) => {
+    var user = {
+        "username": profile.nickname,
+        "email": profile.nickname,
+        "picture": profile.nickname,
+        "subject": profile.sub,
+    };
+    console.log(user)
+}

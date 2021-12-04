@@ -27,5 +27,16 @@ func Setup() *gin.Engine {
 	// Health check
 	router.GET("/health", controllers.Status)
 
+	api := router.Group("/api")
+	{
+		v1 := api.Group("/v1")
+		{
+			user := v1.Group("/users")
+			{
+				user.POST("/", controllers.CreateUser)
+			}
+		}
+	}
+
 	return router
 }
