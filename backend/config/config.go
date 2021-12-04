@@ -11,33 +11,32 @@ import (
 )
 
 type EnvConfig struct {
-	Port           string `mapstructure:"PORT"`
-	DatabaseDriver string `mapstructure:"DB_DRIVER"`
-	DatabaseName   string `mapstructure:"DB_NAME"`
+	Port     string `mapstructure:"PORT"`
+	DBDriver string `mapstructure:"DB_DRIVER"`
+	DBName   string `mapstructure:"DB_NAME"`
 }
 
 var ENV *EnvConfig
 
 func Load() {
-	ENV := &EnvConfig{}
-	environment := strings.ToLower(os.Getenv("GO_ENVIRONMENT"))
-
-	viper.SetConfigFile(fmt.Sprintf("%s.env", environment))
+	ENV = &EnvConfig{}
+	env := strings.ToLower(os.Getenv("GO_ENVIRONMENT"))
+	viper.SetConfigFile(fmt.Sprintf("%s.env", env))
 	viper.AddConfigPath(".")
 	viper.AutomaticEnv()
 
 	if err := viper.ReadInConfig(); err != nil {
 		var viperErr viper.ConfigFileNotFoundError
-		if ok := errors.As(err, &viperErr); !ok {
-			log.Fatal(fmt.Errorf("config file not found %s", err))
+		if ok := errors.As(err, &viperErr); ok {
+			log.Fatalln(fmt.Errorf("config file not found. %w", err))
 		} else {
-			log.Fatal(fmt.Errorf("unexpected error %w", err))
+			log.Fatalln(fmt.Errorf("unexpected error loading config file. %w", err))
 		}
 	}
 
 	if err := viper.Unmarshal(ENV); err != nil {
-		log.Fatal(fmt.Errorf("failed to unmarshal config %w", err))
+		log.Fatalln(fmt.Errorf("failed to unmarshal config. %w", err))
 	}
 
-	fmt.Println("Success: environment config loaded.")
+	fmt.Println("Success: environment config file loaded.")
 }
