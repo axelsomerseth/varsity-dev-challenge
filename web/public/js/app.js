@@ -40,8 +40,8 @@ window.onload = async() => {
 const updateUI = async() => {
     const isAuthenticated = await auth0.isAuthenticated();
 
-    document.getElementById("btn-logout").disabled = !isAuthenticated;
-    document.getElementById("btn-login").disabled = isAuthenticated;
+    // document.getElementById("btn-logout").disabled = !isAuthenticated;
+    // document.getElementById("btn-login").disabled = isAuthenticated;
     if (isAuthenticated) {
         document.getElementById("gated-content").classList.remove("hidden");
 
@@ -52,14 +52,23 @@ const updateUI = async() => {
         document.getElementById("ipt-user-profile").textContent = JSON.stringify(
             await auth0.getUser()
         );
-        document.getElementById("btn-login").style.visibility = 'hidden';
-        document.getElementById("btn-logout").style.visibility = 'visible';
+        document.getElementById("btn-login").innerText = "Log out";
     } else {
         document.getElementById("gated-content").classList.add("hidden");
-        document.getElementById("btn-login").style.visibility = 'visible';
-        document.getElementById("btn-logout").style.visibility = 'hidden';
+        document.getElementById("btn-login").innerText = "Log in";
     }
 };
+
+const changeStateButton = async() => {
+    const isAuthenticated = await auth0.isAuthenticated();
+    if (isAuthenticated) {
+        document.getElementById("btn-login").innerText = "Log out";
+        await logout()
+    } else {
+        document.getElementById("btn-login").innerText = "Log in";
+        await login()
+    }
+}
 
 const login = async() => {
     await auth0.loginWithRedirect({
