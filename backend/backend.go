@@ -18,9 +18,9 @@ func Start() {
 
 	// Start router
 	r := router.Setup()
+	port := fmt.Sprintf(":%s", config.ENV.Port)
 
 	// Handle errors
-	port := fmt.Sprintf(":%s", config.ENV.Port)
 	if err := r.Run(port); err != nil {
 		log.Fatal("failed to start the backend. %w", err)
 	}
