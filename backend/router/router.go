@@ -34,6 +34,13 @@ func Setup() *gin.Engine {
 			user := v1.Group("/users")
 			{
 				user.POST("/", controllers.CreateUser)
+				user.GET("/:userId", controllers.GetUser)
+			}
+
+			post := v1.Group("posts")
+			{
+				post.GET("/:postId", nil)
+				post.GET("/", nil)
 			}
 		}
 	}

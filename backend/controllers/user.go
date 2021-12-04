@@ -35,3 +35,15 @@ func CreateUser(c *gin.Context) {
 
 	c.JSON(http.StatusCreated, &user)
 }
+
+func GetUser(c *gin.Context) {
+	userID := c.Param("userId")
+
+	var user models.User
+	if r := db.Connection.First(&user, userID); r.Error != nil {
+		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": r.Error.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, &user)
+}
