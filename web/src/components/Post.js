@@ -1,26 +1,23 @@
 import React from "react";
+import { Row, Col } from "reactstrap";
+import contentData from "../utils/contentData";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import logo from "../assets/logo.svg";
 
 const Post = () => (
-	<div class="container">
-		<div class="row">
-			<div class="col-sm-1">
-				<img className="mb-3 app-logo" src={logo} alt="User profile picture" width="50" />
-			</div>
-			<div class="col-sm-6">
-				<h5 className="mb-4">Username</h5>
-			</div>
-			<div class="col-sm-5">
-				<h6 className="mb-4">Time</h6>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-sm">
-				<p className="lead">
-					Tweet
-				</p>
-			</div>
-		</div>
+	<div className="next-steps my-5">
+		{contentData.map((col, i) => (
+			<Row className="d-flex justify-content-between">
+				<h6 className="mb-3">
+					<a href={col.link}>
+						<img className="mb-3 app-logo" src={logo} alt="User profile picture" width="50" />
+						<FontAwesomeIcon icon="link" className="mr-2" />
+						{col.title}
+					</a>
+				</h6>
+				<p>{col.description}</p>
+			</Row>
+		))}
 	</div>
 );
 
