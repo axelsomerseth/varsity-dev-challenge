@@ -40,8 +40,6 @@ window.onload = async() => {
 const updateUI = async() => {
     const isAuthenticated = await auth0.isAuthenticated();
 
-    // document.getElementById("btn-logout").disabled = !isAuthenticated;
-    // document.getElementById("btn-login").disabled = isAuthenticated;
     if (isAuthenticated) {
         document.getElementById("gated-content").classList.remove("hidden");
 
