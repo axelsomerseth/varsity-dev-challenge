@@ -3,11 +3,13 @@ package backend
 import (
 	"log"
 
+	"github.com/axelsomerseth/varsity-dev-challenge/backend/config"
 	"github.com/axelsomerseth/varsity-dev-challenge/backend/router"
 )
 
 func Start() {
 	// Load env variables
+	config.Load()
 
 	// Connect Database
 
