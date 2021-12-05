@@ -2,7 +2,6 @@ package controllers
 
 import (
 	"net/http"
-	"net/url"
 
 	"github.com/axelsomerseth/varsity-dev-challenge/backend/db"
 	"github.com/axelsomerseth/varsity-dev-challenge/backend/models"
@@ -11,10 +10,10 @@ import (
 
 func CreateUser(c *gin.Context) {
 	var userInput struct {
-		Username string  `validate:"required,max=20"`
-		Email    string  `validate:"required,max=255"`
-		Subject  string  `validate:"required"`
-		Picture  url.URL `validate:"url"`
+		Username string `json:"username" validate:"required,max=20"`
+		Email    string `json:"email" validate:"required,max=255"`
+		Subject  string `json:"subject" validate:"required"`
+		Picture  string `json:"picture" validate:"url"`
 	}
 
 	if err := c.BindJSON(&userInput); err != nil {
