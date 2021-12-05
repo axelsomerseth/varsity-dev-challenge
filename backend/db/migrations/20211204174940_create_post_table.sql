@@ -2,7 +2,7 @@
 -- SQL in this section is executed when the migration is applied.
 CREATE TABLE IF NOT EXISTS POST (
     ID INTEGER PRIMARY KEY AUTOINCREMENT,
-    USERID INTEGER,
+    USER_ID INTEGER,
     POST TEXT,
     CREATED_AT TEXT
 );

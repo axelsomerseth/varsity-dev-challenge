@@ -9,3 +9,7 @@ type Post struct {
 	Post      string `validate:"required,max=140"` // tweet
 	CreatedAt time.Time
 }
+
+func (Post) TableName() string {
+	return "POST"
+}

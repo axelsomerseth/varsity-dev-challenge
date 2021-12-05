@@ -10,3 +10,7 @@ type User struct {
 	Subject string  `validate:"required"`
 	Picture url.URL `validate:"url"`
 }
+
+func (User) TableName() string {
+	return "USER"
+}

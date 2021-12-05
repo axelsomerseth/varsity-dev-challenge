@@ -39,8 +39,9 @@ func Setup() *gin.Engine {
 
 			post := v1.Group("posts")
 			{
-				post.GET("/:postId", nil)
-				post.GET("/", nil)
+				post.GET("/", controllers.ListPosts)
+				post.GET("/:postId", controllers.GetPost)
+				post.POST("/", controllers.CreatePost)
 			}
 		}
 	}
