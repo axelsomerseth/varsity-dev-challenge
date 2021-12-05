@@ -23,7 +23,7 @@ window.onload = async() => {
         return;
     }
 
-    // NEW - check for the code and state parameters
+    // Check for the code and state parameters
     const query = window.location.search;
     if (query.includes("code=") && query.includes("state=")) {
 
@@ -35,27 +35,29 @@ window.onload = async() => {
         // Use replaceState to redirect the user away and remove the querystring parameters
         window.history.replaceState({}, document.title, "/");
     }
+
+    homeAnchor = document.getElementById("home-anchor");
+    homeAnchor.addEventListener('click', renderHome);
 }
 
 const updateUI = async() => {
     const isAuthenticated = await auth0.isAuthenticated();
 
     if (isAuthenticated) {
-        document.getElementById("btn-login").innerText = "Log out";
-        renderProfile(await auth0.getUser());
+        document.getElementById("session-btn").innerText = "Log out";
     } else {
         document.getElementById("profile").classList.add("hidden");
-        document.getElementById("btn-login").innerText = "Log in";
+        document.getElementById("session-btn").innerText = "Log in";
     }
 };
 
 const changeStateButton = async() => {
     const isAuthenticated = await auth0.isAuthenticated();
     if (isAuthenticated) {
-        document.getElementById("btn-login").innerText = "Log out";
+        document.getElementById("session-btn").innerText = "Log out";
         await logout()
     } else {
-        document.getElementById("btn-login").innerText = "Log in";
+        document.getElementById("session-btn").innerText = "Log in";
         await login()
     }
 }
@@ -72,7 +74,13 @@ const logout = () => {
     });
 };
 
-const renderProfile = (profile) => {
+const renderHome = () => {
+    hideProfile();
+
+};
+
+const renderProfile = async() => {
+    var profile = await auth0.getUser();
     var user = {
         "username": profile.nickname,
         "email": profile.email,
@@ -93,4 +101,8 @@ const renderProfile = (profile) => {
     document.getElementById("profile").classList.remove("hidden");
     document.getElementById("username").textContent = user.username;
     document.getElementById("profile-picture").setAttribute("src", user.picture);
+};
+
+const hideProfile = async() => {
+    document.getElementById("profile").classList.add("hidden");
 }
