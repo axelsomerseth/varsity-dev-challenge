@@ -2,10 +2,10 @@ package models
 
 type User struct {
 	Model
-	Username string `validate:"required,max=20"`
-	Email    string `validate:"required,max=255"`
-	Subject  string `validate:"required"`
-	Picture  string `validate:"url"`
+	Username string `json:"username" validate:"required,max=20"`
+	Email    string `json:"email" validate:"required,max=255"`
+	Subject  string `json:"subject" validate:"required"`
+	Picture  string `json:"picture" validate:"url"`
 }
 
 func (User) TableName() string {

@@ -44,13 +44,14 @@ func GetPost(c *gin.Context) {
 }
 
 func ListPosts(c *gin.Context) {
-	var post []models.Post
-	if r := db.Connection.Find(&post); r.Error != nil {
+	posts := []*models.Post{}
+	where := map[string]interface{}{}
+	if r := db.Connection.Where(where).Find(&posts); r.Error != nil {
 		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": r.Error.Error()})
 		return
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"data": &post,
+		"data": &posts,
 	})
 }

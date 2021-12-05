@@ -35,16 +35,20 @@ window.onload = async() => {
         // Use replaceState to redirect the user away and remove the querystring parameters
         window.history.replaceState({}, document.title, "/");
     }
+    defineEventListeners();
+}
 
+const defineEventListeners = () => {
     homeAnchor = document.getElementById("home-anchor");
     homeAnchor.addEventListener('click', renderHome);
-}
+};
 
 const updateUI = async() => {
     const isAuthenticated = await auth0.isAuthenticated();
 
     if (isAuthenticated) {
         document.getElementById("session-btn").innerText = "Log out";
+        listPosts();
     } else {
         document.getElementById("profile").classList.add("hidden");
         document.getElementById("session-btn").innerText = "Log in";
@@ -60,7 +64,7 @@ const changeStateButton = async() => {
         document.getElementById("session-btn").innerText = "Log in";
         await login()
     }
-}
+};
 
 const login = async() => {
     await auth0.loginWithRedirect({
@@ -76,6 +80,7 @@ const logout = () => {
 
 const renderHome = () => {
     hideProfile();
+    listPosts();
 
 };
 
@@ -93,7 +98,7 @@ const renderProfile = async() => {
             data: user
         })
         .then((response) => {
-            console.log(response);
+            console.log(response.data);
         }, (error) => {
             console.log(error);
         });
@@ -105,4 +110,40 @@ const renderProfile = async() => {
 
 const hideProfile = async() => {
     document.getElementById("profile").classList.add("hidden");
-}
+};
+
+const createPost = async() => {
+    var profile = await auth0.getUser();
+    var user = {
+        "username": profile.nickname,
+        "email": profile.email,
+        "picture": profile.picture,
+        "subject": profile.sub,
+    };
+    var postText = document.getElementById("post-text").value;
+    axios({
+            method: 'post',
+            url: 'http://localhost:8080/api/v1/posts/',
+            data: {
+                "post": postText,
+                "userId": 1
+            }
+        })
+        .then((response) => {
+            console.log(response.data);
+        }, (error) => {
+            console.log(error);
+        });
+};
+
+const listPosts = async() => {
+    axios({
+            method: 'get',
+            url: 'http://localhost:8080/api/v1/posts/'
+        })
+        .then((response) => {
+            console.log(response.data.data);
+        }, (error) => {
+            console.log(error);
+        });
+};
