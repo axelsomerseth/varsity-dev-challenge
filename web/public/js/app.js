@@ -84,9 +84,18 @@ const logout = () => {
 const renderProfile = (profile) => {
     var user = {
         "username": profile.nickname,
-        "email": profile.nickname,
-        "picture": profile.nickname,
+        "email": profile.email,
+        "picture": profile.picture,
         "subject": profile.sub,
     };
-    console.log(user)
+    axios({
+            method: 'post',
+            url: 'http://localhost:8080/api/v1/users/',
+            data: user
+        })
+        .then((response) => {
+            console.log(response);
+        }, (error) => {
+            console.log(error);
+        });
 }
