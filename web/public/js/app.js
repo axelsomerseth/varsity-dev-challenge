@@ -50,7 +50,7 @@ const updateUI = async() => {
         document.getElementById("session-btn").innerText = "Log out";
         listPosts();
     } else {
-        document.getElementById("profile").classList.add("hidden");
+        document.getElementById("profile-container").classList.add("hidden");
         document.getElementById("session-btn").innerText = "Log in";
     }
 };
@@ -84,6 +84,10 @@ const renderHome = () => {
 
 };
 
+const hideHome = async() => {
+    document.getElementById("home-container").classList.add("hidden");
+};
+
 const renderProfile = async() => {
     var profile = await auth0.getUser();
     var user = {
@@ -102,14 +106,14 @@ const renderProfile = async() => {
         }, (error) => {
             console.log(error);
         });
-
-    document.getElementById("profile").classList.remove("hidden");
+    hideHome();
+    document.getElementById("profile-container").classList.remove("hidden");
     document.getElementById("username").textContent = user.username;
     document.getElementById("profile-picture").setAttribute("src", user.picture);
 };
 
 const hideProfile = async() => {
-    document.getElementById("profile").classList.add("hidden");
+    document.getElementById("profile-container").classList.add("hidden");
 };
 
 const createPost = async() => {
@@ -134,6 +138,7 @@ const createPost = async() => {
         }, (error) => {
             console.log(error);
         });
+    document.getElementById("close-new-post-btn").click();
 };
 
 const listPosts = async() => {
