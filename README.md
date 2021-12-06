@@ -1,11 +1,16 @@
 # How to start the server.
-### 1. First run the golang server:
+
+### 1. Install Goose migration tool:
 ```
-$  make start
+$  go install github.com/pressly/goose/v3/cmd/goose@latest
 ```
-### 2. Run database migration command:
+### 3. Run database migration command:
 ```
 $  make migrate-up
+```
+### 3. Run the golang server:
+```
+$  make start
 ```
 
 ------------

@@ -17,7 +17,7 @@ func Setup() *gin.Engine {
 	// CORS policy
 	router.Use(cors.AllowAll())
 
-	router.SetTrustedProxies([]string{""})
+	// router.SetTrustedProxies([]string{""})
 
 	router.StaticFile("/", filepath.Join("web", "index.html"))
 	router.StaticFS("/public/css", gin.Dir(filepath.Join("web", "public", "css"), false))
