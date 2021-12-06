@@ -4,7 +4,6 @@ go 1.17
 
 require (
 	github.com/gin-gonic/gin v1.7.7
-	github.com/go-gormigrate/gormigrate/v2 v2.0.0
 	github.com/rs/cors v1.8.0
 	github.com/spf13/viper v1.9.0
 	gorm.io/driver/sqlite v1.2.6
